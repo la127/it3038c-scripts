@@ -7,7 +7,7 @@ $Username = $env:USERNAME
 # Get hostname
 $Hostname = $env:COMPUTERNAME
 
-# Get PowerShell version (helps w/ ensuring successful execution)
+# Get PowerShell version
 $PSVersion = $PSVersionTable.PSVersion
 
 # Get current date
