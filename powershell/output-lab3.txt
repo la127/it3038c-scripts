@@ -1,0 +1,1 @@
+﻿This machine's IP is 192.168.33.27. User is CECHUser. Hostname is DESKTOP-099UQRG. PowerShell Version 5.1.19041.3031. Today's Date is Sunday, September 24, 2023
