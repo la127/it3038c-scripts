@@ -6,7 +6,8 @@ def show_menu():
     print("1. Calculate how many seconds old you are")
     print("2. Count letters, vowels, and consonants in a word")
     print("3. Play the Guess the Number game")
-    print("4. Quit")
+    print("4. Calculate prime numbers between a number and 0")
+    print("5. Quit")
 
 def calculate_seconds_old():
     birthday_date = input("Enter your birthday in MM/DD/YY format: ")
@@ -36,9 +37,9 @@ def guess_the_number_game():
     attempts = 0
     max_attempts = 5  # only 5 tries
 
-    print("Welcome to Guess the Number!")
+    print("Welcome to the Guess the Number Game!")
     print("I'm thinking of a number between 1 and 100.")
-    print(f"You have {max_attempts} attempts to guess the correct number.")
+    print(f"You have {max_attempts} attempts to guess the number.")
 
     while attempts < max_attempts:
         try:
@@ -62,10 +63,24 @@ def guess_the_number_game():
     if attempts >= max_attempts:
         print(f"Sorry, you've used all {max_attempts} attempts. The secret number was {secret_number}.")
 
+def calculate_prime_numbers():
+    number = int(input("Enter a number: "))
+    
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    prime_count = sum(1 for i in range(2, number + 1) if is_prime(i))
+    print(f"There are {prime_count} prime numbers between 0 and {number}.")
+
 if __name__ == "__main__":
     while True:
         show_menu()
-        choice = input("Enter your choice (1/2/3/4): ")
+        choice = input("Enter your choice (1/2/3/4/5): ")
 
         if choice == "1":
             calculate_seconds_old()
@@ -75,7 +90,9 @@ if __name__ == "__main__":
         elif choice == "3":
             guess_the_number_game()
         elif choice == "4":
+            calculate_prime_numbers()
+        elif choice == "5":
             print("Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter a valid option (1/2/3/4).")
+            print("Invalid choice. Please enter a valid option (1/2/3/4/5).")
