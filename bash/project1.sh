@@ -11,7 +11,7 @@ curl -s "$URL" > "$temp_file"
 # the 'app-stat' div hosts the current player count
 player_count=$(grep -A 1 "app-stat\">" "$temp_file" | grep -o "<span class=\"num\">[0-9]\+" | awk -F'>' '{print $2}')
 
-echo "Current player count for app 440: $player_count"
+echo "Playing recently, 24-hour-peak, and all-time-peak: $player_count"
 
 # Clean up the temporary file used by curl.
 rm -f "$temp_file"
