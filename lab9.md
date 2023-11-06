@@ -4,5 +4,5 @@
 
 # Instructions
 1. CD into node/lab9 and execute ```node api.js```
-2. Open a new terminal, CD into python/lab9 and execute ```python fetch.py```
+2. Open a new terminal, CD into python/lab9, and execute ```python fetch.py```
 3. Enjoy your printed/fetched data
