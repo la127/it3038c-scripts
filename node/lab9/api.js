@@ -4,7 +4,7 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
-const widgetsData = JSON.parse(fs.readFileSync('widgets.json').toString());
+const widgetsData = JSON.parse(fs.readFileSync('./widgets.json').toString());
 
 // Add ID field to the widgets data
 widgetsData.forEach((widget, index) => {
