@@ -96,7 +96,7 @@ function startPeriodicUpdates() {
         } catch (error) {
             console.error('Failed to update player counts:', error.message);
         }
-    }, 300000); // Update every 5 minutes
+    }, 600000); // Update every 10 minutes
 }
 
 // Get TF2 player count from Steam API
