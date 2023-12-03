@@ -3,9 +3,11 @@ const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const axios = require('axios');
+const fs = require('fs');
 
 const app = express();
 const PORT = 3000;
+const DATA_FILE = 'player_counts.json';
 
 app.use(bodyParser.json());
 
@@ -25,8 +27,23 @@ const options = {
 const specs = swaggerJsdoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// In-memory storage for player counts
+// In-memory storage for player counts and timestamps
 let playerCounts = [];
+
+// Load previous counts from JSON file on startup
+if (fs.existsSync(DATA_FILE)) {
+    try {
+        const data = fs.readFileSync(DATA_FILE, 'utf8');
+        playerCounts = JSON.parse(data);
+        if (!Array.isArray(playerCounts)) {
+            throw new Error('Invalid data in player_counts.json');
+        }
+    } catch (error) {
+        console.error('Error parsing player_counts.json:', error.message);
+        // Initialize with an empty array if parsing fails
+        playerCounts = [];
+    }
+}
 
 // Sample endpoint to get player counts
 /**
@@ -39,7 +56,7 @@ let playerCounts = [];
  *         description: Successful response
  *         content:
  *           application/json:
- *             example: {"playerCounts": [50000, 51000, 52000]}
+ *             example: {"playerCounts": [{"count": 50000, "timestamp": "2023-12-05T15:30:00"}, {"count": 51000, "timestamp": "2023-12-05T15:31:00"}]}
  */
 app.get('/api/player-counts', (req, res) => {
     res.json({ playerCounts });
@@ -50,19 +67,24 @@ app.get('/api/player-counts', (req, res) => {
 setInterval(async () => {
     try {
         const playerCount = await getTF2PlayerCount();
-        playerCounts.push(playerCount);
+        const timestamp = new Date().toISOString();
+        playerCounts.push({ count: playerCount, timestamp });
         if (playerCounts.length > 10) {
             playerCounts.shift();
         }
+        console.log(`Player count updated at ${timestamp}: ${playerCount}`);
+
+        // Save current counts to JSON file
+        fs.writeFileSync(DATA_FILE, JSON.stringify(playerCounts), 'utf8');
     } catch (error) {
         console.error('Failed to update player counts:', error.message);
     }
-}, 60000); // Update every 60 seconds
+}, 300000); // Update every 5 minutes
 
 // Get TF2 player count from Steam API
 async function getTF2PlayerCount() {
     try {
-        const response = await axios.get(`https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=440'`);
+        const response = await axios.get('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=440');
         const playerCount = response.data.response.player_count;
         return playerCount;
     } catch (error) {
