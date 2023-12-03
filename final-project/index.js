@@ -45,6 +45,22 @@ if (fs.existsSync(DATA_FILE)) {
     }
 }
 
+// Fetch initial player count and store in JSON file
+(async () => {
+    try {
+        const initialPlayerCount = await getTF2PlayerCount();
+        const initialTimestamp = new Date().toISOString();
+        playerCounts.push({ count: initialPlayerCount, timestamp: initialTimestamp });
+        fs.writeFileSync(DATA_FILE, JSON.stringify(playerCounts), 'utf8');
+        console.log(`Initial player count recorded at ${initialTimestamp}: ${initialPlayerCount}`);
+    } catch (error) {
+        console.error('Failed to fetch initial player count:', error.message);
+    }
+
+    // Start periodic updates after initializing
+    startPeriodicUpdates();
+})();
+
 // Sample endpoint to get player counts
 /**
  * @swagger
@@ -64,22 +80,24 @@ app.get('/api/player-counts', (req, res) => {
 
 // Periodically update player counts in memory
 // If over 10, remove the oldest player count
-setInterval(async () => {
-    try {
-        const playerCount = await getTF2PlayerCount();
-        const timestamp = new Date().toISOString();
-        playerCounts.push({ count: playerCount, timestamp });
-        if (playerCounts.length > 10) {
-            playerCounts.shift();
-        }
-        console.log(`Player count updated at ${timestamp}: ${playerCount}`);
+function startPeriodicUpdates() {
+    setInterval(async () => {
+        try {
+            const playerCount = await getTF2PlayerCount();
+            const timestamp = new Date().toISOString();
+            playerCounts.push({ count: playerCount, timestamp });
+            if (playerCounts.length > 10) {
+                playerCounts.shift();
+            }
+            console.log(`Player count updated at ${timestamp}: ${playerCount}`);
 
-        // Save current counts to JSON file
-        fs.writeFileSync(DATA_FILE, JSON.stringify(playerCounts), 'utf8');
-    } catch (error) {
-        console.error('Failed to update player counts:', error.message);
-    }
-}, 300000); // Update every 5 minutes
+            // Save current counts to JSON file
+            fs.writeFileSync(DATA_FILE, JSON.stringify(playerCounts), 'utf8');
+        } catch (error) {
+            console.error('Failed to update player counts:', error.message);
+        }
+    }, 300000); // Update every 5 minutes
+}
 
 // Get TF2 player count from Steam API
 async function getTF2PlayerCount() {
