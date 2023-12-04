@@ -6,6 +6,7 @@ Welcome to the TF2 Player Counts project! This project provides a simple API to 
 - [TF2 Player Counts Project](#tf2-player-counts-project)
   - [Table of Contents](#table-of-contents)
   - [Dependencies](#dependencies)
+  - [Example](#example)
   - [Installation](#installation)
     - [Clone the Git Repository](#clone-the-git-repository)
     - [Install Dependencies](#install-dependencies)
@@ -20,6 +21,9 @@ Welcome to the TF2 Player Counts project! This project provides a simple API to 
     - [Running the API](#running-the-api)
     - [Running the CLI](#running-the-cli)
   - [Api Documentation](#api-documentation)
+
+## Example
+![image](https://github.com/lh1207/it3038c-scripts/assets/100445409/578ead65-6245-4d23-b16e-bbd55c89f2e2)
 
 ## Dependencies
 The project has the following dependencies:
@@ -101,7 +105,7 @@ python fetch.py
 ```
 The Python CLI will fetch and display the TF2 player counts and generate a plot showing the counts over time.
 
-## Api Documentation
+## API Documentation
 The API documentation is available at http://localhost:3000/api-docs when the API is running. It provides details on the available endpoints and how to use them.
 
 Feel free to explore and enjoy the TF2 Player Counts project! If you encounter any issues or have questions, please check the GitHub repository for support.
