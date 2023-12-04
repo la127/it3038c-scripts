@@ -1,9 +1,13 @@
-# TF2 Player Counts Project
+# Team Fortress 2 Player Counts Project
 
-Welcome to the TF2 Player Counts project! This project provides a simple API to retrieve Team Fortress 2 player counts and a Python CLI to visualize the player counts over time. This README provides instructions on how to set up and run the project on Windows, macOS, and Linux using various package managers.
+Welcome to the Team Fortress 2 Player Counts project! This project provides a simple API to retrieve Team Fortress 2 player counts and a Python CLI to visualize the player counts over time. This README provides instructions on how to set up and run the project on Windows, macOS, and Linux using various package managers.
+
+## Impact
+This application is useful because it provides a visual representation of the amount of users playing Team Fortress 2, which shows the power of not only Python for data representation, but also NodeJS and JSON for presistent data through an API and local JSON file.
 
 ## Table of Contents
-- [TF2 Player Counts Project](#tf2-player-counts-project)
+- [TF2 Player Counts Project](#team-fortress-2-player-counts-project)
+  - [Impact](#impact)
   - [Table of Contents](#table-of-contents)
   - [Dependencies](#dependencies)
   - [Example](#example)
